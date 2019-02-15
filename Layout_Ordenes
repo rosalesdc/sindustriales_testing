@@ -1,0 +1,48 @@
+Layout: Ajustes->Document Template
+Nombre de la vista: external_layout_clean
+ID externo: web.external_layout_clean
+--------------------------------------
+<?xml version="1.0"?>
+<t t-name="web.external_layout_clean">
+        <div class="header">
+            <div class="o_clean_header">
+            <div class="row">
+                <div class="col-6">
+                    <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)" style="max-width: 280px; max-height: 120px;"/>
+                </div>
+                <div class="col-8 offset-1" name="company_address">
+                    <ul class="list-unstyled">
+                        <strong><li t-if="company.name"><span t-field="company.name"/></li></strong>
+                        <li t-if="company.vat"><t t-esc="company.country_id.vat_label or 'Tax ID'"/>: <span t-field="company.vat"/></li>
+                        
+                        <li t-if="company.email"><span t-field="company.email"/></li>
+                        <li t-if="company.website"><span t-field="company.website"/></li>
+                    </ul>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="article o_report_layout_clean" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')" style="font-size: 14px;">
+            <t t-call="web.address_layout"/>
+            <t t-raw="0"/>
+        </div>
+
+        <div class="footer o_clean_footer" style="font-size: 12px;">
+            <div class="row mt8" >
+                <div class="col-4 text-center">
+                    
+                </div>
+                <div class="col-5 text-center">
+                    <span class="company_address" t-field="company.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true}"/>
+                    <span t-if="company.phone">Tel: <span t-field="company.phone"/></span>
+                </div>
+                
+                <div class="col-2">
+                    <ul t-if="report_type == 'pdf'" class="list-inline pagenumber float-right text-center">
+                        <li class="list-inline-item"><strong><span class="page"/></strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </t>
